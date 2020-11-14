@@ -11,17 +11,16 @@ int main()
 	float	*angle_table_f = (float*)malloc(sizeof(float) * ANGLES_TABLE_SIZE);
 	size_t	*angle_table_t = (size_t*)malloc(sizeof(size_t) * ANGLES_TABLE_SIZE);
 
-	srand(1);
-
 	fill_sin_table(sin_table, SIN_TABLE_SIZE);
-	rand_fill_angle_table(angle_table_d, angle_table_f,
-						  angle_table_t, SIN_TABLE_SIZE, ANGLES_TABLE_SIZE);
 
 	printf("Test info:\nTest table size: %d\n", ANGLES_TABLE_SIZE);
 	printf("Sin table size:  %d\n\n", SIN_TABLE_SIZE);
 	printf("%10s%10s%10s\n", "double", "float", "table");
 	for (int i = 0; i < TESTS_COUNT; ++i)
 	{
+		srand(i);
+		rand_fill_angle_table(angle_table_d, angle_table_f,
+							  angle_table_t, SIN_TABLE_SIZE, ANGLES_TABLE_SIZE);
 		test_sin_double(angle_table_d, ANGLES_TABLE_SIZE);
 		test_sin_float(angle_table_f, ANGLES_TABLE_SIZE);
 		test_sin_table(sin_table, angle_table_t, ANGLES_TABLE_SIZE);
