@@ -34,7 +34,7 @@ void	fill_sin_table(double *table, size_t size)
 	double angle_cur = 0.;
 	double angle_stp = 2. * M_PI / size;
 
-	for (size_t i = 0; i < 10000; ++i)
+	for (size_t i = 0; i < size; ++i)
 	{
 		table[i] = sin(angle_cur);
 		angle_cur += angle_stp;
@@ -44,12 +44,15 @@ void	fill_sin_table(double *table, size_t size)
 void	rand_fill_angle_table(double *table_d, float *table_f,
 							  size_t* table_t, size_t table_t_size, size_t size)
 {
-	double angle_steps;
-	double angle_step = 2. * M_PI / table_t_size;
+	double	angle_steps;
+	double	angle_step = 2. * M_PI / table_t_size;
+	int		divisor;
 
 	for (size_t i = 0; i < size; ++i)
 	{
-		table_d[i] = (double)rand() / (double)rand();
+		divisor = rand();
+		divisor = divisor == 0 ? 1 : divisor;
+		table_d[i] = (double)rand() / (double)divisor;
 		table_f[i] = (float)table_d[i];
 		modf(table_d[i] / angle_step, &angle_steps);
 		table_t[i] = (int)angle_steps % table_t_size;
@@ -97,5 +100,4 @@ void test_sin_table(double *sin_table,
 	}
 	stop = clock();
 	printf("%10f", (double)(stop - start) / (double)(CLOCKS_PER_SEC));
-
 }
